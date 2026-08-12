@@ -152,3 +152,52 @@ portofolio-v1/
 ### Langkah Selanjutnya
 
 **Step 3:** Setup Supabase client (server & browser) serta middleware proteksi route `/admin/*`.
+
+---
+
+## Step 3: Setup Supabase Client & Auth Middleware (Proxy)
+
+**Tanggal:** 2026-08-13
+
+### Apa yang Dikerjakan
+
+1. Buat `lib/supabase/server.ts` — Supabase server client:
+   - Menggunakan `createServerClient` dari `@supabase/ssr`
+   - Membaca/menulis cookies via `next/headers` (async `cookies()`)
+   - Dipakai di Server Components dan Server Actions untuk fetch data + mutasi
+
+2. Buat `lib/supabase/client.ts` — Supabase browser client:
+   - Menggunakan `createBrowserClient` dari `@supabase/ssr`
+   - Dipakai di Client Components (admin dashboard) untuk mutasi real-time
+
+3. Buat `proxy.ts` — Route protection (menggantikan `middleware.ts`):
+   - **Catatan penting:** Di Next.js 16, `middleware.ts` sudah **deprecated** dan diganti `proxy.ts` dengan export function `proxy()` (bukan `middleware()`)
+   - Memproteksi semua route `/admin/*` kecuali `/admin/login`
+   - User belum login → redirect ke `/admin/login`
+   - User sudah login mengakses `/admin/login` → redirect ke `/admin/hero`
+   - Menggunakan `supabase.auth.getUser()` (bukan `getSession()`) untuk validasi JWT yang aman
+   - Matcher hanya mencocokkan `/admin/:path*` (tidak mengganggu route publik)
+
+### File yang Dibuat
+
+| File | Keterangan |
+|---|---|
+| `lib/supabase/server.ts` | Server client (cookies-based, untuk Server Components/Actions) |
+| `lib/supabase/client.ts` | Browser client (untuk Client Components) |
+| `proxy.ts` | Route protection `/admin/*` (Next.js 16 proxy, bukan middleware) |
+
+### Catatan Teknis
+
+- **`middleware.ts` → `proxy.ts`**: Next.js 16 me-rename file convention ini. Export function harus bernama `proxy`, bukan `middleware`. Lihat [docs](node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/proxy.md).
+- **`getUser()` vs `getSession()`**: `getUser()` memvalidasi JWT di server, `getSession()` tidak. Selalu gunakan `getUser()` untuk auth check.
+
+### Build Check
+
+```
+✓ Compiled successfully
+ƒ Proxy (Middleware) ← proxy.ts terdeteksi
+```
+
+### Langkah Selanjutnya
+
+**Step 4:** Bangun sistem desain dasar: konfigurasi warna, font, komponen UI reusable, dan `lib/icons.ts`.
