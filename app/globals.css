@@ -162,3 +162,133 @@ a {
     transform: translateY(10px);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   HOVER UTILITY CLASSES
+   (used in Server Components instead of JS onMouseEnter/Leave)
+   ───────────────────────────────────────────────────────────── */
+
+/* CTA / primary gold button */
+.btn-gold {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-eb-garamond), serif;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px 34px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-gold:hover {
+  background: var(--gold);
+  color: var(--bg-0);
+}
+
+/* Ghost bordered button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-secondary);
+  font-family: var(--font-eb-garamond), serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Muted text link that highlights gold on hover */
+.link-muted {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-muted:hover {
+  color: var(--gold);
+}
+
+/* Social link (icon + text) */
+.link-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-eb-garamond), serif;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-social:hover {
+  color: var(--gold);
+}
+
+/* Contact item (email, phone) hover */
+.link-contact {
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.link-contact:hover {
+  opacity: 0.75;
+}
+
+/* Portfolio card hover */
+.plate-card {
+  display: block;
+  background: var(--bg-0);
+  padding: 36px 32px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.plate-card:hover {
+  background: var(--bg-1);
+}
+
+/* Back link */
+.link-back {
+  font-family: var(--font-eb-garamond), serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.link-back:hover {
+  color: var(--gold);
+}
+
+/* Nav links */
+.nav-link {
+  font-family: var(--font-eb-garamond), serif;
+  font-size: 16px;
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--gold);
+}

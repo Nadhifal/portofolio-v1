@@ -266,3 +266,79 @@ portofolio-v1/
 ### Langkah Selanjutnya
 
 **Step 5:** Bangun halaman publik `/` — komponen section self-contained (`Navbar`, `Hero`, `About`, `Skills`, `Portfolio`, `Experience`, `Testimonial`, `Contact`, `Footer`) + halaman detail proyek `/portfolio/[slug]`.
+
+---
+
+## Step 5: Landing Page Publik + Server Action Kontak
+
+**Tanggal:** 2026-08-13
+
+### Apa yang Dikerjakan
+
+1. **`lib/types.ts`** — TypeScript types untuk semua tabel DB
+
+2. **`app/page.tsx`** — Overwrite default Next.js page menjadi landing page yang mengassemble semua section components
+
+3. **`app/actions.ts`** — Server Action `submitContactForm` dengan Zod validation (digabung karena Contact section membutuhkannya)
+
+4. **Section Components** (`components/public/sections/`):
+   - `Navbar.tsx` — `"use client"` sticky navbar dengan scroll blur effect + mobile hamburger menu
+   - `Hero.tsx` — 92vh centered layout, gold hairlines, animated CTA button
+   - `About.tsx` — 2-kolom grid (photo + text), drop-cap, edu card gold-bordered
+   - `Skills.tsx` — Progress bars dengan icon Tabler, level badge, bg-1 dark section
+   - `Portfolio.tsx` — Server Component yang pass data ke PortfolioClient
+   - `Experience.tsx` — Timeline dengan gold dot, year label, title + description
+   - `Testimonial.tsx` — Centered blockquote serif dengan large gold quote mark
+   - `Contact.tsx` — 2-kolom (info + form), icons, social links
+   - `Footer.tsx` — Logo + copyright year
+
+5. **Client Components** (`components/public/`):
+   - `PortfolioClient.tsx` — Tab filter state + grid ProjectCard + hover effects
+   - `ContactForm.tsx` — `useActionState`, field errors, success state, Toast
+
+6. **`app/portfolio/[slug]/page.tsx`** — Detail halaman proyek: icon, role, case study content, tech stack sidebar, external links
+
+7. **`app/globals.css`** — Tambah CSS hover utility classes (`.btn-gold`, `.btn-ghost`, `.link-muted`, `.link-social`, `.link-contact`, `.plate-card`, `.link-back`, `.nav-link`) untuk menggantikan JS `onMouseEnter/Leave` di Server Components
+
+### File yang Dibuat/Diubah
+
+| File | Status |
+|---|---|
+| `lib/types.ts` | ✅ Baru |
+| `app/page.tsx` | ✏️ Diubah (replace default) |
+| `app/actions.ts` | ✅ Baru (Server Action Zod) |
+| `app/globals.css` | ✏️ Diubah (+hover CSS classes) |
+| `app/portfolio/[slug]/page.tsx` | ✅ Baru |
+| `components/public/sections/Navbar.tsx` | ✅ Baru |
+| `components/public/sections/Hero.tsx` | ✅ Baru |
+| `components/public/sections/About.tsx` | ✅ Baru |
+| `components/public/sections/Skills.tsx` | ✅ Baru |
+| `components/public/sections/Portfolio.tsx` | ✅ Baru |
+| `components/public/sections/Experience.tsx` | ✅ Baru |
+| `components/public/sections/Testimonial.tsx` | ✅ Baru |
+| `components/public/sections/Contact.tsx` | ✅ Baru |
+| `components/public/sections/Footer.tsx` | ✅ Baru |
+| `components/public/PortfolioClient.tsx` | ✅ Baru |
+| `components/public/ContactForm.tsx` | ✅ Baru |
+
+### Catatan Teknis
+
+- **Event handlers di Server Components**: Next.js tidak mengizinkan `onMouseEnter/Leave` props di Server Components. Solusi: pakai CSS hover classes di `globals.css` instead of JS handlers.
+- **Server Action + Zod**: `submitContactForm` menggunakan `useActionState` (bukan `useFormState` yang deprecated) untuk progressive enhancement.
+
+### Build Check
+
+```
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+└ ƒ /portfolio/[slug]
+
+ƒ Proxy (Middleware)
+✓ Compiled successfully
+✓ TypeScript clean
+```
+
+### Langkah Selanjutnya
+
+**Step 6:** Admin Login page (`/admin/login`) + layout admin sidebar dengan navigasi ke semua section management.
