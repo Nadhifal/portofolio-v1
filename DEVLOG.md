@@ -97,3 +97,58 @@ portofolio-v1/
 ### Langkah Selanjutnya
 
 **Step 2:** Buat file SQL migration (`supabase/migrations/0001_init.sql`) dan seed data (`supabase/seed.sql`) sesuai skema database di prompt.
+
+---
+
+## Step 2: Database Migration SQL & RLS Policies
+
+**Tanggal:** 2026-08-13
+
+### Apa yang Dikerjakan
+
+1. Buat file SQL migration `supabase/migrations/0001_init.sql` dengan 11 tabel:
+   - `profiles` — Extends Supabase Auth users
+   - `site_settings` — Singleton: nama situs
+   - `hero_content` — Singleton: konten hero section
+   - `about_content` — Singleton: konten about section + foto
+   - `skills` — List: keahlian dengan icon, level, percent
+   - `portfolio_categories` — List: kategori tab portfolio (slug unik)
+   - `portfolio_projects` — List: proyek portfolio dengan slug, role, content (case study), tech (array), live_url, repo_url
+   - `experience` — List: timeline pengalaman
+   - `testimonial` — Singleton: kutipan testimonial
+   - `contact_info` — Singleton: info kontak & media sosial
+   - `contact_messages` — List: pesan masuk dari form kontak publik
+
+2. Implementasi Row Level Security (RLS) pada semua tabel:
+   - **Tabel konten** (9 tabel): `SELECT` untuk `anon` + `authenticated`, `INSERT/UPDATE/DELETE` hanya `authenticated`
+   - **`contact_messages`**: `INSERT` untuk `anon` + `authenticated` (agar visitor bisa kirim pesan), `SELECT/UPDATE/DELETE` hanya `authenticated`
+   - **`profiles`**: Hanya bisa akses profil sendiri (by `auth.uid()`)
+
+3. Buat file seed data `supabase/seed.sql` berdasarkan `DEFAULT_DATA` di `admin.html`:
+   - Hero: "Building products that *work end to end*"
+   - About: Nadhif Alfasya, GPA 3.54, Untirta
+   - 4 Skills: Front-End 90%, Back-End 85%, Database 75%, AI 70%
+   - 3 Kategori: Website, Mobile App, Machine Learning
+   - 4 Proyek: IMPACT.ID, Klambie, UNDC, Seabank Sentiment (lengkap slug/role/content/tech)
+   - 3 Experience: UKM UNDC, Cisco cert, NSP cert
+   - 1 Testimonial
+   - Contact info: email, phone, lokasi, LinkedIn, GitHub
+
+### File yang Dibuat
+
+| File | Keterangan |
+|---|---|
+| `supabase/migrations/0001_init.sql` | DDL 11 tabel + RLS policies (310 baris) |
+| `supabase/seed.sql` | Data awal semua tabel (150 baris) |
+
+### Cara Menjalankan
+
+1. Buat project Supabase di [supabase.com](https://supabase.com)
+2. Buka **SQL Editor** di dashboard Supabase
+3. Jalankan isi `supabase/migrations/0001_init.sql` terlebih dahulu
+4. Lalu jalankan isi `supabase/seed.sql`
+5. Salin URL, anon key, dan service role key ke `.env.local`
+
+### Langkah Selanjutnya
+
+**Step 3:** Setup Supabase client (server & browser) serta middleware proteksi route `/admin/*`.
