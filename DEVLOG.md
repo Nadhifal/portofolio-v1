@@ -407,6 +407,43 @@ Route (app)
 ✓ TypeScript clean
 ```
 
+**Step 7:** Koneksi ke Supabase production — isi `.env.local` dengan URL & anon key, jalankan migrasi SQL, dan uji end-to-end.
+
+---
+
+## Step 7: Supabase Database Setup
+
+**Tanggal:** 2026-08-13
+
+### Apa yang Dikerjakan
+
+1. **`scripts/test-connection.mjs`** — Script Node.js untuk verifikasi koneksi ke semua 10 tabel Supabase. Gunakan setelah migration.
+
+2. **`scripts/run-migration.mjs`** — Script otomatis yang mencoba eksekusi SQL via Supabase Management API. Fallback: instruksi manual jika API membutuhkan access token lain.
+
+3. **`SUPABASE_SETUP.md`** — Panduan lengkap setup database: migration → seed → buat admin user → test dev server.
+
+### Status Koneksi
+
+- `.env.local` — ✅ sudah terisi dengan URL dan Keys yang benar
+- Database tables — ⏳ **Perlu dijalankan manual di Supabase SQL Editor**
+
+### Cara Setup Database (Manual)
+
+1. Buka [Supabase SQL Editor](https://supabase.com/dashboard/project/odpykmaeujoabvvyvpga/sql/new)
+2. Jalankan `supabase/migrations/0001_init.sql`
+3. Jalankan `supabase/seed.sql`
+4. Buat admin user di [Authentication → Users](https://supabase.com/dashboard/project/odpykmaeujoabvvyvpga/auth/users)
+5. Verifikasi: `node scripts/test-connection.mjs`
+
+### File yang Dibuat
+
+| File | Deskripsi |
+|---|---|
+| `scripts/test-connection.mjs` | Cek koneksi + row count semua tabel |
+| `scripts/run-migration.mjs` | Eksekusi SQL via API (fallback: manual) |
+| `SUPABASE_SETUP.md` | Panduan setup lengkap |
+
 ### Langkah Selanjutnya
 
-**Step 7:** Koneksi ke Supabase production — isi `.env.local` dengan URL & anon key, jalankan migrasi SQL, dan uji end-to-end.
+**Step 8:** Deployment ke Vercel — `vercel deploy`, set env vars di Vercel dashboard, domain custom jika ada.
