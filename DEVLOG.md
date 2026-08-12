@@ -201,3 +201,68 @@ portofolio-v1/
 ### Langkah Selanjutnya
 
 **Step 4:** Bangun sistem desain dasar: konfigurasi warna, font, komponen UI reusable, dan `lib/icons.ts`.
+
+---
+
+## Step 4: Design System & Komponen UI Reusable
+
+**Tanggal:** 2026-08-13
+
+### Apa yang Dikerjakan
+
+1. **`app/layout.tsx`** — Diganti dengan font Cormorant Garamond + EB Garamond via `next/font/google`, metadata portfolio dasar.
+
+2. **`app/globals.css`** — Design system lengkap:
+   - CSS variables palet editorial dark museum (`--bg-0/1/2`, `--line`, `--gold`, `--gold-dim`, `--text-primary/secondary/muted`)
+   - Tailwind v4 `@theme inline` extension untuk akses warna via `text-gold`, `bg-bg-1`, dsb.
+   - Base styles: `body` dengan font EB Garamond, `h1-h6` dengan Cormorant Garamond
+   - Utility classes: `.eyebrow`, `.drop-cap`, `.skill-bar`, `.skill-bar-fill`, `.hairline`, `.wrap`
+   - Keyframe animations untuk Toast (toast-in/toast-out)
+
+3. **`lib/icons.ts`** — Icon mapping:
+   - `iconMap` — 28 icon Tabler → komponen `@tabler/icons-react`
+   - `getIcon(name)` — resolve string DB ke komponen, fallback ke `IconCode`
+   - `getIconOptions()` — daftar opsi untuk dropdown admin
+
+4. **Komponen UI** di `components/ui/`:
+
+| Komponen | Deskripsi |
+|---|---|
+| `Button.tsx` | Primary/ghost/danger variants, sm/md/lg sizes, loading spinner |
+| `Card.tsx` | Card + PlateLabel (museum plate style) |
+| `SectionHeading.tsx` | Eyebrow + title + gold rule divider |
+| `Badge.tsx` | Badge, LevelBadge (skill levels), TechTag (tech stack) |
+| `Input.tsx` | Label + error + hint, gold focus border |
+| `Textarea.tsx` | Sama seperti Input, resize vertical |
+| `Select.tsx` | Dropdown dengan options array, styled dark |
+| `Toast.tsx` | Success/error/info, auto-dismiss, `useToast` hook |
+| `index.ts` | Barrel export semua komponen |
+
+### File yang Dibuat/Diubah
+
+| File | Status |
+|---|---|
+| `app/layout.tsx` | ✏️ Diubah — font & metadata |
+| `app/globals.css` | ✏️ Diubah — design system penuh |
+| `lib/icons.ts` | ✅ Baru |
+| `components/ui/Button.tsx` | ✅ Baru |
+| `components/ui/Card.tsx` | ✅ Baru |
+| `components/ui/SectionHeading.tsx` | ✅ Baru |
+| `components/ui/Badge.tsx` | ✅ Baru |
+| `components/ui/Input.tsx` | ✅ Baru |
+| `components/ui/Textarea.tsx` | ✅ Baru |
+| `components/ui/Select.tsx` | ✅ Baru |
+| `components/ui/Toast.tsx` | ✅ Baru |
+| `components/ui/index.ts` | ✅ Baru (barrel export) |
+
+### Build Check
+
+```
+✓ Compiled successfully
+✓ TypeScript clean
+ƒ Proxy (Middleware)
+```
+
+### Langkah Selanjutnya
+
+**Step 5:** Bangun halaman publik `/` — komponen section self-contained (`Navbar`, `Hero`, `About`, `Skills`, `Portfolio`, `Experience`, `Testimonial`, `Contact`, `Footer`) + halaman detail proyek `/portfolio/[slug]`.
