@@ -339,6 +339,74 @@ Route (app)
 ✓ TypeScript clean
 ```
 
+**Step 6:** Admin Login page (`/admin/login`) + layout admin sidebar dengan navigasi ke semua section management.
+
+---
+
+## Step 6: Admin Panel (CMS)
+
+**Tanggal:** 2026-08-13
+
+### Apa yang Dikerjakan
+
+1. **`app/admin/actions.ts`** — Semua Server Actions admin:
+   - Auth: `signIn`, `signOut`
+   - Single-row forms: `upsertHero`, `upsertAbout`, `upsertTestimonial`, `upsertContactInfo`
+   - CRUD: `createSkill`, `updateSkill`, `deleteSkill`
+   - CRUD: `createCategory`, `deleteCategory`, `createProject`, `updateProject`, `deleteProject`
+   - CRUD: `createExperience`, `updateExperience`, `deleteExperience`
+   - Messages: `markMessageRead`, `deleteMessage`
+
+2. **`app/admin/layout.tsx`** — Layout server component: checks auth state, shows sidebar for authenticated users, bare centering for login page
+
+3. **`app/admin/page.tsx`** — Redirect ke `/admin/hero`
+
+4. **`app/admin/login/page.tsx`** — Login form (`useActionState` + `signIn` action)
+
+5. **`components/admin/AdminSidebar.tsx`** — Client component sidebar: sticky, gold active indicator, logout form
+
+6. **`components/admin/AdminUI.tsx`** — Reusable helper components: `AdminPageHeader`, `AdminFormCard`, `FormFeedback`
+
+7. **Admin Pages + Form Components:**
+
+| Route | Page | Form/Manager |
+|---|---|---|
+| `/admin/hero` | `app/admin/hero/page.tsx` | `components/admin/forms/HeroForm.tsx` |
+| `/admin/about` | `app/admin/about/page.tsx` | `components/admin/forms/AboutForm.tsx` |
+| `/admin/skills` | `app/admin/skills/page.tsx` | `components/admin/SkillsManager.tsx` |
+| `/admin/portfolio` | `app/admin/portfolio/page.tsx` | `components/admin/PortfolioManager.tsx` |
+| `/admin/experience` | `app/admin/experience/page.tsx` | `components/admin/ExperienceManager.tsx` |
+| `/admin/testimonial` | `app/admin/testimonial/page.tsx` | `components/admin/forms/TestimonialForm.tsx` |
+| `/admin/contact` | `app/admin/contact/page.tsx` | `components/admin/forms/ContactInfoForm.tsx` |
+| `/admin/messages` | `app/admin/messages/page.tsx` | — (server component) |
+
+### Catatan Teknis
+
+- **Delete actions return `void`**: Form `action` prop di React harus `(formData: FormData) => void | Promise<void>`. Delete actions tidak butuh return value, jadi return type diubah ke `Promise<void>`.
+- **Auth flow**: `proxy.ts` melindungi semua `/admin/*` kecuali `/admin/login`. Admin layout server component cek `getUser()` untuk conditional sidebar rendering.
+- **Portfolio form**: Field `tech[]` diinput sebagai comma-separated string, di-split saat server action.
+
+### Build Check
+
+```
+Route (app)
+├ ƒ /admin
+├ ƒ /admin/about
+├ ƒ /admin/contact
+├ ƒ /admin/experience
+├ ƒ /admin/hero
+├ ƒ /admin/login
+├ ƒ /admin/messages
+├ ƒ /admin/portfolio
+├ ƒ /admin/skills
+├ ƒ /admin/testimonial
+└ ƒ /portfolio/[slug]
+
+ƒ Proxy (Middleware)
+✓ Compiled successfully
+✓ TypeScript clean
+```
+
 ### Langkah Selanjutnya
 
-**Step 6:** Admin Login page (`/admin/login`) + layout admin sidebar dengan navigasi ke semua section management.
+**Step 7:** Koneksi ke Supabase production — isi `.env.local` dengan URL & anon key, jalankan migrasi SQL, dan uji end-to-end.
