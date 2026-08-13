@@ -466,4 +466,34 @@ Route (app)
 - **SEO & Performance**: 100% Selesai (Semantic elements, metadata, single H1, server components optimized).
 
 ---
+
+## Fix, Penyesuaian, Update (Pasca Step 8)
+
+**Tanggal:** 2026-08-12 & 2026-08-13
+
+Setelah penyelesaian Step 8, dilakukan serangkaian perbaikan (sinkronisasi UI) secara bertahap agar tampilan aplikasi Next.js/Tailwind identik 100% dengan prototipe asli (`portfolio.html`).
+
+### Apa yang Dikerjakan
+
+1. **Infrastruktur & Admin (Storage):**
+   - Menambahkan migrasi baru `0002_storage_bucket.sql` untuk membuat bucket `portfolio` di Supabase Storage beserta *policies* agar foto profil pada form *About* dapat di-upload dan ditampilkan secara publik tanpa error "Bucket not found".
+
+2. **Sinkronisasi UI Frontend (Tailwind CSS Murni):**
+   - **Navbar**: Menyesuaikan tipografi logo menjadi dua warna ("nadhif" teks primer, "al" emas).
+   - **Hero**: Memperbaiki lebar garis divider dan *spacing* agar sesuai dengan prototipe.
+   - **Testimonial**: Menghapus ikon tanda kutip raksasa yang tidak sesuai dan merapikan tipografi italic.
+   - **About Section**:
+     - Membangun ulang layout responsif (`grid-cols-1 md:grid-cols-2`) murni dengan kelas Tailwind.
+     - Mengimplementasikan bingkai emas pada foto profil menggunakan pseudo-element Tailwind (`after:content-[''] after:border-[var(--gold-dim)]`).
+     - Membatasi ukuran maksimal foto profil (300px) pada tampilan *mobile*.
+     - Membangun ulang kotak edukasi (`edu-card`) beserta layout ikon, baris meta (tahun dan GPA), serta menambahkan *signature*.
+   - **Portfolio Section**:
+     - Mengganti gaya *Tabs* navigasi menggunakan kelas Tailwind dan menyembunyikan *native scrollbar* vertikal/horizontal (`[scrollbar-width:none] [&::-webkit-scrollbar]:hidden`) agar tetap bisa digeser di HP namun bersih di desktop.
+     - Mendesain ulang `ProjectCard` agar sama persis dengan elemen `.plate` pada prototipe HTML, termasuk implementasi nomor urut dengan angka Romawi (Plate I, Plate II) dan animasi efek transisi gambar statis abu-abu menjadi berwarna dan membesar (*zoom*) saat di-*hover* (`group-hover:grayscale-0 group-hover:scale-105`).
+   - **Skills Section**:
+     - Merombak total `Skills.tsx` agar menggunakan struktur *flex* murni dari Tailwind. Label "Advanced/Intermediate", baris *progress*, teks persentase, dan ikon telah dibuat sejajar persis seperti HTML referensi tanpa bergantung pada CSS buatan khusus.
+
+*Catatan: Seluruh perbaikan visual dijaga agar mematuhi aturan penggunaan Tailwind CSS Utilities (tanpa custom CSS tambahan di `globals.css`).*
+
+---
 🎉 **Proyek Selesai & Siap Di-deploy!**

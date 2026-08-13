@@ -208,33 +208,22 @@ a {
   color: var(--gold);
 }
 
+.hover-gold-text:hover {
+  color: var(--gold) !important;
+}
+
 /* Muted text link that highlights gold on hover */
 .link-muted {
   color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
 
 .link-muted:hover {
   color: var(--gold);
 }
 
-/* Social link (icon + text) */
-.link-social {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-muted);
-  font-family: var(--font-eb-garamond), serif;
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
 
-.link-social:hover {
-  color: var(--gold);
-}
 
 /* Contact item (email, phone) hover */
 .link-contact {

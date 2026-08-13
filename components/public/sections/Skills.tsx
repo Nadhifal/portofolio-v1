@@ -56,72 +56,34 @@ export default async function Skills() {
     <section
       id="skills"
       aria-label="Skills"
-      style={{
-        padding: "96px 0",
-        background: "var(--bg-1)",
-        borderTop: "1px solid var(--line)",
-        borderBottom: "1px solid var(--line)",
-      }}
+      className="py-[96px] bg-[var(--bg-1)] border-y border-[var(--line)] px-6"
     >
-      <div className="wrap">
+      <div className="max-w-[1000px] mx-auto">
         <SectionHeading eyebrow="Technical Proficiency" title="Skills" />
 
-        <div
-          style={{
-            maxWidth: "640px",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: "32px",
-          }}
-        >
+        <div className="max-w-[640px] mx-auto flex flex-col gap-8">
           {skills.map((skill) => {
             const Icon = getIcon(skill.icon);
             return (
-              <div key={skill.id}>
-                {/* Row: icon + label + level + percent */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <Icon
-                    size={18}
-                    style={{ color: "var(--gold-dim)", flexShrink: 0 }}
-                  />
-                  <span
-                    style={{
-                      fontFamily: "var(--font-eb-garamond), serif",
-                      fontSize: "17px",
-                      color: "var(--text-primary)",
-                      flex: 1,
-                    }}
-                  >
+              <div key={skill.id} className="mb-2">
+                {/* Row: label + level */}
+                <div className="flex justify-between text-[14px] tracking-[0.08em] uppercase text-[var(--text-secondary)] mb-2 items-center">
+                  <b className="text-[var(--text-primary)] font-normal font-serif text-[18px] tracking-[0.02em] normal-case inline-flex items-center gap-[10px]">
+                    <Icon size={18} className="text-[var(--gold)]" />
                     {skill.label}
-                  </span>
-                  {skill.level && <LevelBadge level={skill.level} />}
-                  {skill.percent !== null && (
-                    <span
-                      style={{
-                        fontFamily: "var(--font-eb-garamond), serif",
-                        fontSize: "13px",
-                        color: "var(--text-muted)",
-                        minWidth: "36px",
-                        textAlign: "right",
-                      }}
-                    >
-                      {skill.percent}%
-                    </span>
-                  )}
+                  </b>
+                  <div className="flex items-center gap-2">
+                    <span>{skill.level}</span>
+                    {skill.percent !== null && (
+                      <span className="opacity-75 text-[12px]">({skill.percent}%)</span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Progress bar */}
-                <div className="skill-bar">
+                <div className="h-[2px] bg-[var(--bg-2)] relative">
                   <div
-                    className="skill-bar-fill"
+                    className="absolute left-0 top-0 h-[2px] bg-[var(--gold)]"
                     style={{ width: `${skill.percent ?? 0}%` }}
                   />
                 </div>

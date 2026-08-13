@@ -1,46 +1,94 @@
-export default function Footer() {
+import { createClient } from "@/lib/supabase/server";
+import { getIcon } from "@/lib/icons";
+import type { ContactInfo } from "@/lib/types";
+
+const FALLBACK: ContactInfo = {
+  id: "fallback",
+  email: "naddhfal@gmail.com",
+  phone: "0852-8784-9912",
+  location: "Serang, Banten",
+  linkedin_url: "#",
+  github_url: "#",
+};
+
+export default async function Footer() {
   const year = new Date().getFullYear();
+  let info: ContactInfo = FALLBACK;
+
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.from("contact_info").select("*").single();
+    if (data) info = data;
+  } catch {
+    // Use fallback silently
+  }
+
+  const IconLinkedin = getIcon("ti-brand-linkedin");
+  const IconGithub = getIcon("ti-brand-github");
+  const IconMail = getIcon("ti-mail");
 
   return (
     <footer
       id="footer"
       style={{
-        borderTop: "1px solid var(--line)",
-        padding: "36px 0",
+        padding: "50px 32px 60px",
+        textAlign: "center",
       }}
     >
       <div
-        className="wrap"
+        className="foot-icons"
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "12px",
+          justifyContent: "center",
+          gap: "30px",
+          marginBottom: "22px",
+          fontSize: "16px",
+          fontVariant: "small-caps",
+          letterSpacing: "0.04em",
+          color: "var(--text-secondary)",
         }}
       >
-        <span
-          style={{
-            fontFamily: "var(--font-cormorant), serif",
-            fontSize: "20px",
-            letterSpacing: "0.06em",
-            color: "var(--text-primary)",
-          }}
-        >
-          N.<span style={{ color: "var(--gold)" }}>A</span>
-        </span>
+        {info.linkedin_url && info.linkedin_url !== "#" && (
+          <a
+            href={info.linkedin_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover-gold-text"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", transition: "color .25s ease" }}
+          >
+            <IconLinkedin size={16} /> LinkedIn
+          </a>
+        )}
+        {info.github_url && info.github_url !== "#" && (
+          <a
+            href={info.github_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover-gold-text"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", transition: "color .25s ease" }}
+          >
+            <IconGithub size={16} /> GitHub
+          </a>
+        )}
+        {info.email && (
+          <a
+            href={`mailto:${info.email}`}
+            className="hover-gold-text"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", transition: "color .25s ease" }}
+          >
+            <IconMail size={16} /> Email
+          </a>
+        )}
+      </div>
 
-        <p
-          style={{
-            fontFamily: "var(--font-eb-garamond), serif",
-            fontSize: "13px",
-            letterSpacing: "0.06em",
-            color: "var(--text-muted)",
-            margin: 0,
-          }}
-        >
-          © {year} Nadhif Alfasya. All rights reserved.
-        </p>
+      <div
+        className="fine"
+        style={{
+          fontSize: "13px",
+          color: "var(--text-muted)",
+        }}
+      >
+        © {year} Nadhif Alfasya. All rights reserved.
       </div>
     </footer>
   );

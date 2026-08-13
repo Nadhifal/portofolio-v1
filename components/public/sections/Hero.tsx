@@ -27,92 +27,82 @@ export default async function Hero() {
   }
 
   return (
-    <section
-      id="hero"
-      aria-label="Hero"
-      style={{
-        minHeight: "92vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        padding: "80px 32px",
-        maxWidth: "720px",
-        margin: "0 auto",
-      }}
-    >
-      {/* Gold hairline top */}
-      <div
+    <>
+      <section
+        id="hero"
+        aria-label="Hero"
         style={{
-          width: "1px",
-          height: "56px",
-          background: "var(--gold-dim)",
-          marginBottom: "40px",
-        }}
-      />
-
-      {/* Eyebrow */}
-      {hero.eyebrow && (
-        <span
-          className="eyebrow"
-          style={{ display: "block", marginBottom: "28px" }}
-        >
-          {hero.eyebrow}
-        </span>
-      )}
-
-      {/* Title */}
-      <h1
-        style={{
-          fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-          fontSize: "clamp(42px, 7vw, 72px)",
-          fontWeight: 400,
-          lineHeight: 1.1,
-          color: "var(--text-primary)",
-          marginBottom: "28px",
+          padding: "80px 24px",
+          textAlign: "center",
+          maxWidth: "800px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        {hero.title_plain}{" "}
-        <em style={{ color: "var(--gold)", fontStyle: "italic" }}>
-          {hero.title_highlight}
-        </em>
-      </h1>
-
-      {/* Description */}
-      {hero.description && (
-        <p
+        {/* Top gold line using a div to mimic ::before */}
+        <div
           style={{
-            fontFamily: "var(--font-eb-garamond), serif",
-            fontSize: "18px",
-            color: "var(--text-secondary)",
-            maxWidth: "560px",
-            lineHeight: 1.7,
-            marginBottom: "44px",
+            width: "1px",
+            height: "60px",
+            background: "var(--gold-dim)",
+            marginBottom: "40px",
+          }}
+        />
+
+        {/* Eyebrow */}
+        {hero.eyebrow && <span className="eyebrow">{hero.eyebrow}</span>}
+
+        {/* Title */}
+        <h1
+          style={{
+            fontSize: "clamp(48px, 8vw, 72px)",
+            lineHeight: 1.1,
+            margin: "24px 0",
+            color: "var(--text-primary)",
           }}
         >
-          {hero.description}
-        </p>
-      )}
+          {hero.title_plain}{" "}
+          <em style={{ color: "var(--gold)", fontStyle: "italic" }}>
+            {hero.title_highlight}
+          </em>
+        </h1>
 
-      {/* CTA Button */}
-      <a
-        href="#portfolio"
-        id="hero-cta"
-        className="btn-gold"
-      >
-        {hero.button_text ?? "View Projects"}
-      </a>
+        {/* Description */}
+        {hero.description && (
+          <p
+            style={{
+              fontSize: "19px",
+              color: "var(--text-secondary)",
+              maxWidth: "600px",
+              margin: "0 auto 40px",
+            }}
+          >
+            {hero.description}
+          </p>
+        )}
 
-      {/* Gold hairline bottom */}
-      <div
-        style={{
-          width: "1px",
-          height: "56px",
-          background: "var(--gold-dim)",
-          marginTop: "56px",
-        }}
-      />
-    </section>
+        {/* CTA Button */}
+        <a
+          href="#portfolio"
+          className="btn-gold"
+          style={{
+            display: "inline-block",
+            padding: "13px 32px",
+            border: "1px solid var(--gold)",
+            color: "var(--gold)",
+            fontSize: "13px",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            transition: "background .25s ease, color .25s ease",
+          }}
+        >
+          {hero.button_text ?? "View Projects"}
+        </a>
+      </section>
+
+      <hr className="hairline" />
+    </>
   );
 }

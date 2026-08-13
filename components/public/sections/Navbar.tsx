@@ -50,13 +50,12 @@ export default function Navbar() {
             href="/"
             style={{
               fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-              fontSize: "22px",
-              letterSpacing: "0.06em",
+              fontSize: "26px",
               color: "var(--text-primary)",
               textDecoration: "none",
             }}
           >
-            N.<span style={{ color: "var(--gold)" }}>A</span>
+            nadhif<span style={{ color: "var(--gold)" }}>al</span>
           </Link>
 
           {/* Desktop nav */}

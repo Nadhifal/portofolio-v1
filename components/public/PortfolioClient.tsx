@@ -23,14 +23,7 @@ export default function PortfolioClient({ categories, projects }: Props) {
       {/* Tab bar */}
       <nav
         aria-label="Portfolio categories"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "36px",
-          borderBottom: "1px solid var(--line)",
-          marginBottom: "48px",
-          overflowX: "auto",
-        }}
+        className="flex justify-start md:justify-center gap-[40px] border-b border-[var(--line)] mx-auto mb-[50px] max-w-[800px] px-6 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {categories.map((cat) => {
           const isActive = cat.id === activeTab;
@@ -41,21 +34,12 @@ export default function PortfolioClient({ categories, projects }: Props) {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActiveTab(cat.id)}
-              style={{
-                padding: "12px 0 14px",
-                background: "none",
-                border: "none",
-                borderBottom: `1px solid ${isActive ? "var(--gold)" : "transparent"}`,
-                fontFamily: "var(--font-eb-garamond), serif",
-                fontSize: "16px",
-                fontVariant: "small-caps",
-                letterSpacing: "0.04em",
-                color: isActive ? "var(--gold)" : "var(--text-secondary)",
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-                whiteSpace: "nowrap",
-                marginBottom: "-1px",
-              }}
+              className={`bg-none border-none pt-3 pb-4 text-[16px] lowercase style-small-caps tracking-[0.04em] cursor-pointer mb-[-1px] transition-colors duration-250 ease-in whitespace-nowrap border-b ${
+                isActive
+                  ? "text-[var(--gold)] border-[var(--gold)]"
+                  : "text-[var(--text-secondary)] border-transparent hover:text-[var(--text-primary)]"
+              }`}
+              style={{ fontVariant: "small-caps" }}
             >
               {cat.label}
             </button>
@@ -65,30 +49,13 @@ export default function PortfolioClient({ categories, projects }: Props) {
 
       {/* Project grid */}
       {filtered.length === 0 ? (
-        <p
-          style={{
-            fontFamily: "var(--font-eb-garamond), serif",
-            color: "var(--text-muted)",
-            textAlign: "center",
-            padding: "60px 20px",
-            fontSize: "16px",
-          }}
-        >
+        <p className="font-serif text-[var(--text-muted)] text-center py-[60px] px-5 text-[16px]">
           No projects in this category yet.
         </p>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "24px",
-            maxWidth: "900px",
-            margin: "0 auto",
-          }}
-        >
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        <div className="flex flex-wrap justify-center gap-6 max-w-[900px] mx-auto">
+          {filtered.map((project, idx) => (
+            <ProjectCard key={project.id} project={project} index={idx + 1} />
           ))}
         </div>
       )}
@@ -96,122 +63,50 @@ export default function PortfolioClient({ categories, projects }: Props) {
   );
 }
 
-function ProjectCard({ project }: { project: PortfolioProject }) {
+function ProjectCard({ project, index }: { project: PortfolioProject; index: number }) {
   const Icon = getIcon(project.icon ?? "ti-code");
+  const ArrowRight = getIcon("ti-arrow-right");
+
+  // Roman numeral conversion for 'Plate I', 'Plate II'
+  const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+  const numStr = `Plate ${romanNumerals[index - 1] || index}`;
 
   return (
     <Link
       href={`/portfolio/${project.slug}`}
       id={`project-${project.slug}`}
-      className="plate-card"
-      style={{
-        flex: "1 1 280px",
-        maxWidth: "420px",
-        border: "1px solid var(--line)",
-        padding: 0,
-        background: "var(--bg-0)",
-      }}
+      className="flex flex-col flex-[1_1_300px] max-w-[420px] border border-[var(--line)] bg-[var(--bg-0)] no-underline group cursor-pointer transition-all duration-250 hover:border-[var(--gold-dim)] hover:-translate-y-[3px] focus-visible:outline focus-visible:outline-1 focus-visible:outline-[var(--gold)] focus-visible:outline-offset-2"
     >
-      {/* Plate Image / Banner */}
-      <div
-        style={{
-          aspectRatio: "16/10",
-          background: "linear-gradient(135deg, var(--bg-2), var(--bg-0))",
-          position: "relative",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderBottom: "1px solid var(--line)",
-        }}
-      >
+      {/* Plate Image */}
+      <div className="relative aspect-[16/10] bg-[linear-gradient(135deg,var(--bg-2),var(--bg-0))] overflow-hidden flex items-center justify-center after:content-[''] after:absolute after:inset-0 after:border after:border-[var(--line)]">
         {project.image_url ? (
           <img
             src={project.image_url}
             alt={project.title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "transform 0.5s ease",
-            }}
-            className="project-image"
+            className="w-full h-full object-cover grayscale transition-all duration-400 group-hover:grayscale-0 group-hover:scale-105"
           />
         ) : (
-          <Icon
-            size={32}
-            style={{ color: "var(--gold)", opacity: 0.55 }}
-          />
+          <Icon size={32} className="text-[var(--gold)] opacity-55" />
         )}
-        <div style={{ position: "absolute", inset: 0, border: "1px solid var(--line)", pointerEvents: "none" }} />
       </div>
 
       {/* Plate Caption */}
-      <div style={{ padding: "22px 26px 30px" }}>
-        {project.plate_label && (
-          <span
-            style={{
-              fontFamily: "var(--font-cormorant), serif",
-              fontStyle: "italic",
-              fontSize: "14px",
-              letterSpacing: "0.08em",
-              color: "var(--gold-dim)",
-              display: "block",
-            }}
-          >
-            {project.plate_label}
-          </span>
-        )}
-
-        <h3
-          style={{
-            fontFamily: "var(--font-cormorant), serif",
-            fontSize: "24px",
-            fontWeight: 500,
-            color: "var(--text-primary)",
-            margin: "8px 0 6px",
-            lineHeight: 1.2,
-          }}
-        >
+      <div className="pt-[22px] px-[26px] pb-[30px]">
+        {/* We can use project.plate_label if exists, otherwise fallback to numStr */}
+        <div className="font-serif italic text-[var(--gold-dim)] text-[14px] tracking-[0.08em]">
+          {project.plate_label || numStr}
+        </div>
+        <h3 className="text-[24px] font-serif text-[var(--text-primary)] mt-[8px] mb-[6px] leading-tight">
           {project.title}
         </h3>
-
         {project.description && (
-          <p
-            style={{
-              color: "var(--text-secondary)",
-              fontSize: "15px",
-              fontFamily: "var(--font-eb-garamond), serif",
-              lineHeight: 1.6,
-              marginBottom: "14px",
-            }}
-          >
+          <p className="text-[var(--text-secondary)] text-[15px] font-serif leading-[1.6]">
             {project.description}
           </p>
         )}
-
-        {/* Tech tags */}
-        {project.tech && project.tech.length > 0 && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "14px" }}>
-            {project.tech.slice(0, 4).map((t) => (
-              <TechTag key={t} tech={t} />
-            ))}
-          </div>
-        )}
-
-        <span
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "6px",
-            fontSize: "13px",
-            fontVariant: "small-caps",
-            letterSpacing: "0.06em",
-            color: "var(--gold)",
-            fontFamily: "var(--font-eb-garamond), serif",
-          }}
-        >
-          Read Details →
+        
+        <span className="inline-flex items-center gap-[6px] mt-[14px] text-[13px] tracking-[0.06em] text-[var(--gold)]" style={{ fontVariant: "small-caps" }}>
+          Lihat detail <ArrowRight size={14} className="transition-transform duration-250 group-hover:translate-x-[3px]" />
         </span>
       </div>
     </Link>
