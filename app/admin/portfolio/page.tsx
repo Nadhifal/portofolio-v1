@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminPageHeader } from "@/components/admin/AdminUI";
 import PortfolioManager from "@/components/admin/PortfolioManager";
 
+export const metadata = { title: "Admin - Portfolio" };
+
 export default async function AdminPortfolioPage() {
   let categories: any[] = [];
   let projects: any[] = [];

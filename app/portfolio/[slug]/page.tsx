@@ -10,6 +10,26 @@ import type { PortfolioProject } from "@/lib/types";
 
 type Props = { params: Promise<{ slug: string }> };
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  let title = "Portfolio Project";
+
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("portfolio_projects")
+      .select("title")
+      .eq("slug", slug)
+      .single();
+    if (data) title = data.title;
+  } catch {
+    const fallback = FALLBACK_PROJECTS.find((p) => p.slug === slug);
+    if (fallback) title = fallback.title;
+  }
+
+  return { title };
+}
+
 // Fallback projects matching seed data (for when env vars not set)
 const FALLBACK_PROJECTS: PortfolioProject[] = [
   {
@@ -81,17 +101,6 @@ const FALLBACK_PROJECTS: PortfolioProject[] = [
     created_at: "",
   },
 ];
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const project = FALLBACK_PROJECTS.find((p) => p.slug === slug);
-  return {
-    title: project
-      ? `${project.title} — Nadhif Alfasya`
-      : "Project — Nadhif Alfasya",
-    description: project?.description ?? undefined,
-  };
-}
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;

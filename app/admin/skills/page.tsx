@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminPageHeader } from "@/components/admin/AdminUI";
 import SkillsManager from "@/components/admin/SkillsManager";
 
+export const metadata = { title: "Admin - Skills" };
+
 export default async function AdminSkillsPage() {
   let skills: any[] = [];
   try {

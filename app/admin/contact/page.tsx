@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminPageHeader, AdminFormCard } from "@/components/admin/AdminUI";
 import ContactInfoForm from "@/components/admin/forms/ContactInfoForm";
 
+export const metadata = { title: "Admin - Contact" };
+
 export default async function AdminContactPage() {
   let data = null;
   try {

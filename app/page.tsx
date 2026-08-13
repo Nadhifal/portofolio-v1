@@ -10,7 +10,6 @@ import Contact from "@/components/public/sections/Contact";
 import Footer from "@/components/public/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "Nadhif Alfasya — Portfolio",
   description:
     "Informatics student & full-stack developer building products that work end to end with React, Next.js, Node.js, and Laravel.",
 };

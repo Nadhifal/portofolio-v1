@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminPageHeader, AdminFormCard } from "@/components/admin/AdminUI";
 import TestimonialForm from "@/components/admin/forms/TestimonialForm";
 
+export const metadata = { title: "Admin - Testimonial" };
+
 export default async function AdminTestimonialPage() {
   let data = null;
   try {

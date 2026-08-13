@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminPageHeader } from "@/components/admin/AdminUI";
 import ExperienceManager from "@/components/admin/ExperienceManager";
 
+export const metadata = { title: "Admin - Experience" };
+
 export default async function AdminExperiencePage() {
   let items: any[] = [];
   try {

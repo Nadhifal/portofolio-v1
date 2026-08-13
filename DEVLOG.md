@@ -495,5 +495,21 @@ Setelah penyelesaian Step 8, dilakukan serangkaian perbaikan (sinkronisasi UI) s
 
 *Catatan: Seluruh perbaikan visual dijaga agar mematuhi aturan penggunaan Tailwind CSS Utilities (tanpa custom CSS tambahan di `globals.css`).*
 
+3. **Metadata Title Template (SEO):**
+   - Setup title template di `app/layout.tsx` dengan format `nadhifal | %s` dan default `nadhifal | Portfolio`.
+   - Homepage (`app/page.tsx`) tidak mendefinisikan `title` sendiri, sehingga otomatis menggunakan default dari layout: **nadhifal | Portfolio**.
+   - Halaman portfolio detail (`app/portfolio/[slug]/page.tsx`) menggunakan `generateMetadata` yang mengambil judul proyek dari database Supabase (dengan fallback ke data statis). Contoh: **nadhifal | IMPACT.ID — AI & Blockchain Education Platform**.
+   - Seluruh halaman admin panel ditambahkan `export const metadata = { title: "Admin - [Section]" }`:
+     - `app/admin/hero/page.tsx` → **nadhifal | Admin - Hero**
+     - `app/admin/about/page.tsx` → **nadhifal | Admin - About**
+     - `app/admin/skills/page.tsx` → **nadhifal | Admin - Skills**
+     - `app/admin/portfolio/page.tsx` → **nadhifal | Admin - Portfolio**
+     - `app/admin/experience/page.tsx` → **nadhifal | Admin - Experience**
+     - `app/admin/testimonial/page.tsx` → **nadhifal | Admin - Testimonial**
+     - `app/admin/contact/page.tsx` → **nadhifal | Admin - Contact**
+     - `app/admin/messages/page.tsx` → **nadhifal | Admin - Messages**
+     - `app/admin/login/layout.tsx` → **nadhifal | Admin - Login** *(menggunakan layout karena page-nya `"use client"`)*
+   - Title lama di `app/admin/layout.tsx` (`"Admin — Nadhif Alfasya"`) diubah menjadi `"Admin"` agar tidak menimpa template.
+
 ---
 🎉 **Proyek Selesai & Siap Di-deploy!**

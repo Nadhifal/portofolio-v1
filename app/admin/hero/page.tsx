@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminPageHeader, AdminFormCard } from "@/components/admin/AdminUI";
 import HeroForm from "@/components/admin/forms/HeroForm";
 
+export const metadata = { title: "Admin - Hero" };
+
 export default async function AdminHeroPage() {
   let data = null;
   try {

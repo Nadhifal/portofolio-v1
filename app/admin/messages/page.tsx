@@ -3,6 +3,8 @@ import { AdminPageHeader } from "@/components/admin/AdminUI";
 import { markMessageRead, deleteMessage } from "@/app/admin/actions";
 import type { ContactMessage } from "@/lib/types";
 
+export const metadata = { title: "Admin - Messages" };
+
 export default async function AdminMessagesPage() {
   let messages: ContactMessage[] = [];
   try {

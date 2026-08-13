@@ -18,7 +18,10 @@ const ebGaramond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Nadhif Alfasya — Portfolio",
+  title: {
+    default: "nadhifal | Portfolio",
+    template: "nadhifal | %s",
+  },
   description:
     "Informatics student & full-stack developer building products that work end to end.",
 };
